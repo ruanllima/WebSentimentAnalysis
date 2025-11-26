@@ -26,7 +26,7 @@ df = pd.DataFrame(data)
 # remove unused columns
 df = df.drop(columns=["none", "none.1"])
 # check null rows
-print(df.isna().sum())
+# print(df.isna().sum())
 # remove rows with NaN values
 df = df[df["Text"].notna()]
 
