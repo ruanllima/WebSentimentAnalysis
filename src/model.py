@@ -60,3 +60,12 @@ X_test = vectorizer.transform(X_test)
 # Data balancing by combining SMOTE and ENN.
 smote_enn = SMOTEENN() 
 X_train, y_train = smote_enn.fit_resample(X_train.toarray(), y_train)
+
+# ALGORITHM IMPLEMENTATION (SVM) 
+algorithm = SVC()
+algorithm.fit(X_train, y_train)
+
+
+# ========================== MODEL =============================
+joblib.dump(algorithm   , "model.pkl")
+joblib.dump(vectorizer, "vectorizer.pkl")
