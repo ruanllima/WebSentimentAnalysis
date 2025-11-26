@@ -56,3 +56,7 @@ X_test = [' '.join([token.lemma_ for token in nlp(' '.join(phrase))]) for phrase
 vectorizer = TfidfVectorizer()
 X_train = vectorizer.fit_transform(X_train)
 X_test = vectorizer.transform(X_test)
+
+# Data balancing by combining SMOTE and ENN.
+smote_enn = SMOTEENN() 
+X_train, y_train = smote_enn.fit_resample(X_train.toarray(), y_train)
