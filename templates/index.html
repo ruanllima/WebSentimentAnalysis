@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENTIMENT ANALYSIS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="app-body">
+    <header class="app-header">
+        <h1>Analysis Sentiment</h1>
+    </header>
+    <main class="app-main">
+        <div class="app-div-form">
+            <form class="app-form" method="POST" action="/predict">
+                <input name="text" type="text" placeholder="Type your text">
+                <button>Send</button>
+                <div class="indicator {{ result }}">{{ result.capitalize() }}</div>
+            </form>
+            
+        </div>
+    </main>
+    <footer></footer>
+</body>
+</html>

@@ -1,0 +1,78 @@
+
+.app-body {
+    margin: 0;
+    background: #1e3144ff;
+}
+
+.app-header {
+    margin: 0;
+    background: #4567B7;
+    color: white;
+    padding: 10px;
+}
+
+.app-header h1{
+    margin: 0;
+}
+
+.app-div-form {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 100px;
+}
+
+.app-form {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #b7c8f1ff;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 50px;
+    border-radius: 5px;
+}
+
+.app-form input {
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.app-form button {
+    margin-top: 15px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: #4567B7;
+    color: white;
+}
+
+.indicator {
+    background: white;
+    border-radius: 30px;
+    border: 3px solid #131413ff;
+    padding: 10px 30px;
+    margin-top: 20px;
+}
+
+.indicator.positive {
+    background: green;
+}
+
+.indicator.negative {
+    background: red;
+}
+
+.indicator.irrelevant {
+    background: yellow;
+}
+
+.indicator.neutral {
+    background: gray;
+}
