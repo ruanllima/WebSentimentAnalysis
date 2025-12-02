@@ -18,17 +18,30 @@ nltk.download("stopwords")
 nlp = spacy.load("en_core_web_sm")
 
 # adding dataset
-data = pd.read_excel("./data/twiter_sentiment.xlsx")
+data = pd.read_csv("./data/twiter_sentiment.xlsx")
 df = pd.DataFrame(data)
+
+
 
 # CLEAN DATAS
 
+df = df.drop(columns=["1467810369","Mon Apr 06 22:19:45 PDT 2009", "NO_QUERY","_TheSpecialOne_" ])
+df = df.rename(columns={"0": "Sentiment",
+"@switchfoot http://twitpic.com/2y1zl - Awww, that's a bummer.  You shoulda got David Carr of Third Day to do it. ;D":"Text" })
+
+# embaralha 50% das linhas
+df_rest = df.sample(frac=0.5, random_state=42)
+
+# o resto fica aqui
+df = df.drop(df_rest.index)
+
+
 # remove unused columns
-df = df.drop(columns=["none", "none.1"])
+#df = df.drop(columns=["none", "none.1"])
 # check null rows
 # print(df.isna().sum())
 # remove rows with NaN values
-df = df[df["Text"].notna()]
+#df = df[df["Text"].notna()]
 
 # DEFINE TRAIN AND TEST DATAS
 X_train, X_test, y_train, y_test = train_test_split(df["Text"], df["Sentiment"], random_state=42)
@@ -64,6 +77,11 @@ X_train, y_train = smote_enn.fit_resample(X_train.toarray(), y_train)
 # ALGORITHM IMPLEMENTATION (SVM) 
 algorithm = SVC()
 algorithm.fit(X_train, y_train)
+
+y_pred = algorithm.predict(X_test.toarray())
+
+accuracy = accuracy_score(y_test, y_pred)
+print(accuracy)
 
 
 # ========================== MODEL =============================
