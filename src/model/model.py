@@ -19,9 +19,9 @@ def run():
     nlp = spacy.load("en_core_web_sm", disable=["parser", "tagger", "ner"])
 
     # adding dataset
-    data = pd.read_csv("./data/twitter_training64.csv")
+    data = pd.read_csv("./data/dataset.csv")
     df = pd.DataFrame(data)
-    df = df.sample(frac=0.3)
+    df = df.sample(frac=0.4)
 
 
 
@@ -65,7 +65,7 @@ def run():
 
     # Data balancing by combining SMOTE and ENN.
     # smote_enn = SMOTEENN() 
-    # X_train, y_train = smote_enn.fit_resample(X_train.toarray(), y_train)
+    # X_train, y_train = smote_enn.fit_resample(X_train, y_train)
 
     # ALGORITHM IMPLEMENTATION (SVM) 
     algorithm = SVC()
