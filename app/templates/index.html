@@ -13,10 +13,18 @@
     <main class="app-main">
         <div class="app-div-form">
             <form class="app-form" method="POST" action="/predict">
+                <div class="scroll-msg">
+                    <div class="conteiner-msg">
+                        <div class="sender-msg">Sender receiver the messager for you</div>
+                        <div class="recipient-msg">Recipient receiver the aors message</div>
+                    </div>
+                </div>
+                
                 <input name="text" type="text" placeholder="Type your text">
                 <button>Send</button>
-                <div class="indicator {{ result }}">{{ result.capitalize() }}</div>
+                
             </form>
+            <div class="indicator {{ result }}">{{ result.capitalize() }}</div>
             
         </div>
     </main>

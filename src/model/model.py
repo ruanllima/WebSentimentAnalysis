@@ -23,8 +23,6 @@ def run():
     df = pd.DataFrame(data)
     df = df.sample(frac=0.4)
 
-
-
     # CLEAN DATAS
     df = df.drop(columns=["2401", "Borderlands"])
     df = df.rename(columns={"Positive" : "Sentiment", "im getting on borderlands and i will murder you all ," : "Text"})
