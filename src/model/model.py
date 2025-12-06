@@ -13,77 +13,73 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 import joblib
 
-nltk.download("stopwords")
-# execute 'python -m spacy download en_core_web_sm' in cmd to download the package
-nlp = spacy.load("en_core_web_sm")
+def run():
 
-# adding dataset
-data = pd.read_csv("./data/twiter_sentiment.xlsx")
-df = pd.DataFrame(data)
+    # execute 'python -m spacy download en_core_web_sm' in cmd to download the package
+    nlp = spacy.load("en_core_web_sm", disable=["parser", "tagger", "ner"])
 
-
-
-# CLEAN DATAS
-
-df = df.drop(columns=["1467810369","Mon Apr 06 22:19:45 PDT 2009", "NO_QUERY","_TheSpecialOne_" ])
-df = df.rename(columns={"0": "Sentiment",
-"@switchfoot http://twitpic.com/2y1zl - Awww, that's a bummer.  You shoulda got David Carr of Third Day to do it. ;D":"Text" })
-
-# embaralha 50% das linhas
-df_rest = df.sample(frac=0.5, random_state=42)
-
-# o resto fica aqui
-df = df.drop(df_rest.index)
+    # adding dataset
+    data = pd.read_csv("./data/twitter_training64.csv")
+    df = pd.DataFrame(data)
+    df = df.sample(frac=0.3)
 
 
-# remove unused columns
-#df = df.drop(columns=["none", "none.1"])
-# check null rows
-# print(df.isna().sum())
-# remove rows with NaN values
-#df = df[df["Text"].notna()]
 
-# DEFINE TRAIN AND TEST DATAS
-X_train, X_test, y_train, y_test = train_test_split(df["Text"], df["Sentiment"], random_state=42)
+    # CLEAN DATAS
+    df = df.drop(columns=["2401", "Borderlands"])
+    df = df.rename(columns={"Positive" : "Sentiment", "im getting on borderlands and i will murder you all ," : "Text"})
+    df = df.dropna()
+    df = df[df["Text"] != "str"]
+    df = df[df["Sentiment"] != "str"]
+    # remove unused columns
+    #df = df.drop(columns=["none", "none.1"])
+    # check null rows
+    # print(df.isna().sum())
+    # remove rows with NaN values
+    #df = df[df["Text"].notna()]
 
-# DATA PREPROCESSING
+    # DEFINE TRAIN AND TEST DATAS
+    X_train, X_test, y_train, y_test = train_test_split(df["Text"], df["Sentiment"], random_state=42)
 
-# Remove numbers, initial characters, and convert to lowercase.
-X_train = [re.sub(r'[^a-zA-Z\s]', '', text).lower() for text in X_train]
-X_test = [re.sub(r'[^a-zA-Z\s]', '', text).lower() for text in X_test]
+    # DATA PREPROCESSING
 
-# Tokenization
-X_train = [phrase.split() for phrase in X_train]
-X_test = [phrase.split() for phrase in X_test]
+    # Tokenization
+    #X_train = [phrase.split() for phrase in X_train]
+    # X_test = [phrase.split() for phrase in X_test]
 
-# Remove Stop Words
-stop_words = set(stopwords.words('english'))
-X_train = [[word for word in phrase if word not in stop_words] for phrase in X_train]
-X_test = [[word for word in phrase if word not in stop_words] for phrase in X_test]
+    # Lemmatization
+    docsTrain = nlp.pipe(X_train, batch_size=2000, n_process=1)
+    docsTest = nlp.pipe(X_test, batch_size=2000, n_process=1)
+    X_train = [" ".join(token.lemma_ for token in doc) for doc in docsTrain]
+    X_test = [" ".join(token.lemma_ for token in doc) for doc in docsTest]
 
-# Lemmatization
-X_train = [' '.join([token.lemma_ for token in nlp(' '.join(phrase))]) for phrase in X_train]
-X_test = [' '.join([token.lemma_ for token in nlp(' '.join(phrase))]) for phrase in X_test]
+    # TF-IDF Vectorization
+    vectorizer = TfidfVectorizer(
+        lowercase=True,
+        stop_words='english',
+        token_pattern=r'[a-zA-Z]+',
+        max_features=50000
+    )
+    X_train = vectorizer.fit_transform(X_train)
+    X_test = vectorizer.transform(X_test)
 
-# TF-IDF Vectorization
-vectorizer = TfidfVectorizer()
-X_train = vectorizer.fit_transform(X_train)
-X_test = vectorizer.transform(X_test)
+    # Data balancing by combining SMOTE and ENN.
+    # smote_enn = SMOTEENN() 
+    # X_train, y_train = smote_enn.fit_resample(X_train.toarray(), y_train)
 
-# Data balancing by combining SMOTE and ENN.
-smote_enn = SMOTEENN() 
-X_train, y_train = smote_enn.fit_resample(X_train.toarray(), y_train)
+    # ALGORITHM IMPLEMENTATION (SVM) 
+    algorithm = SVC()
+    algorithm.fit(X_train, y_train)
 
-# ALGORITHM IMPLEMENTATION (SVM) 
-algorithm = SVC()
-algorithm.fit(X_train, y_train)
+    y_pred = algorithm.predict(X_test)
 
-y_pred = algorithm.predict(X_test.toarray())
-
-accuracy = accuracy_score(y_test, y_pred)
-print(accuracy)
+    accuracy = accuracy_score(y_test, y_pred)
+    print(accuracy)
 
 
-# ========================== MODEL =============================
-joblib.dump(algorithm   , "model.pkl")
-joblib.dump(vectorizer, "vectorizer.pkl")
+    # ========================== MODEL =============================
+    joblib.dump(algorithm   , "model.pkl")
+    joblib.dump(vectorizer, "vectorizer.pkl")
+
+if __name__ == "__main__":
+    run()
