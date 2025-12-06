@@ -13,15 +13,26 @@
     <main class="app-main">
         <div class="app-div-form">
             <form class="app-form" method="POST" action="/predict">
-                <div class="scroll-msg">
+                <div id="scroll-msg" class="scroll-msg">
                     <div class="conteiner-msg">
                         <div class="sender-msg">Sender receiver the messager for you</div>
                         <div class="recipient-msg">Recipient receiver the aors message</div>
+                        <div class="sender-msg">Sender receiver the messager for you</div>
+                        <div class="recipient-msg">Recipient receiver the aors message</div>
+                        <div class="sender-msg">Sender receiver the messager for you</div>
+                        <div class="recipient-msg">Recipient receiver the aors message</div>
+                        <div class="sender-msg">Sender receiver the messager for you</div>
+                        <div class="recipient-msg">Recipient receiver the aors message</div>
+                        <div class="sender-msg">Sender receiver the messager for you</div>
+                        <div class="recipient-msg">Recipient receiver the aors message2</div>
                     </div>
                 </div>
+            
+                <div class="form-bottom">
+                    <input name="text" type="text" placeholder="Type your text">
+                    <button>Send</button>
+                </div>
                 
-                <input name="text" type="text" placeholder="Type your text">
-                <button>Send</button>
                 
             </form>
             <div class="indicator {{ result }}">{{ result.capitalize() }}</div>
@@ -29,5 +40,7 @@
         </div>
     </main>
     <footer></footer>
+    <script src="../static/js/script.js">
+    </script>
 </body>
 </html>

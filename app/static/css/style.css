@@ -28,7 +28,7 @@
 .app-form {
     margin: 0;
     display: flex;
-    flex-direction: inline;
+    flex-direction: column;
     justify-content: center;
     background: #f3f7ffff;
     align-items: center;
@@ -87,9 +87,10 @@
 }
 
 .scroll-msg {   
-    height: 100%;
+    height: 90%;
     width: 100%;
-    position: absolute;
+    overflow-y: auto;
+    margin-bottom: auto;
 }
 
 .conteiner-msg {
@@ -115,4 +116,10 @@
     border-radius: 8px;
     color: white;
     margin: 10px;
+}
+
+.form-bottom {
+    display: flex;
+    flex-direction: inline;
+    width: 100%;
 }
