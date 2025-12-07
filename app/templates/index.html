@@ -12,19 +12,10 @@
     </header>
     <main class="app-main">
         <div class="app-div-form">
-            <form class="app-form" method="POST" action="/predict">
+            <form id="app-form" class="app-form" method="POST" action="/predict">
                 <div id="scroll-msg" class="scroll-msg">
-                    <div class="conteiner-msg">
+                    <div id="conteiner-msg" class="conteiner-msg">
                         <div class="sender-msg">Sender receiver the messager for you</div>
-                        <div class="recipient-msg">Recipient receiver the aors message</div>
-                        <div class="sender-msg">Sender receiver the messager for you</div>
-                        <div class="recipient-msg">Recipient receiver the aors message</div>
-                        <div class="sender-msg">Sender receiver the messager for you</div>
-                        <div class="recipient-msg">Recipient receiver the aors message</div>
-                        <div class="sender-msg">Sender receiver the messager for you</div>
-                        <div class="recipient-msg">Recipient receiver the aors message</div>
-                        <div class="sender-msg">Sender receiver the messager for you</div>
-                        <div class="recipient-msg">Recipient receiver the aors message2</div>
                     </div>
                 </div>
             
@@ -41,6 +32,30 @@
     </main>
     <footer></footer>
     <script src="../static/js/script.js">
+    </script>
+    <script>
+        const predict = '{{ result }}';
+        function createDivMsg(text, predict){
+            if (predict != NaN) {
+                const sender = document.createElement('div');
+                sender.textContent = text;
+                sender.classList = ['sender-msg'];
+                document.getElementById('conteiner-msg').appendChild(sender);
+                const recipient = document.createElement('div');
+                recipient.textContent = predict;
+                recipient.classList = ['recipient-msg'];
+                document.getElementById('conteiner-msg').appendChild(recipient);
+            }
+
+        }
+        document.getElementById('app-form').addEventListener('submit', function(event) {
+        const formData = new FormData(this);
+        const text = formData.get('text'); // pega o valor do input que você quer
+        createDivMsg(text, predict);
+        
+        
+       
+        });
     </script>
 </body>
 </html>
