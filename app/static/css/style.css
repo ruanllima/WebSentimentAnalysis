@@ -1,7 +1,15 @@
+@font-face {
+    font-family: 'Coolvetica';
+    src: url('./static/fonts/Coolvetica.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 .app-body {
     margin: 0;
     background: #1e3144ff;
+    font-family: 'Poppins', sans serif;
 }
 
 .app-header {
