@@ -41,7 +41,8 @@
     background: #f3f7ffff;
     align-items: center;
     height: 400px;
-    width: 100%;
+    width: 55%;
+    min-width: 70vh;
     max-width: 800px;
     border-radius: 10px;
     position: relative;
@@ -49,25 +50,38 @@
 
 .app-form input {
     border-radius: 10px;
-    padding: 10px;
+    padding: 13px 8px;
     width: 100%;
     max-width: 800px;
     align: bottom;
+    outline: none;
     position: absolute;
     bottom: 0;
     border: none;
     box-sizing: border-box;
+    font-family: Poppins, sans serif;
 }
 
-.app-form button {
+.form-button-send {
     margin-top: 15px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    background: #4567B7;
-    color: white;
+    height: 40px;
     position: absolute;
     right: 0;
     bottom: 0;
+    margin-bottom: 3px;
+    border: none;
+    background: none;
+}
+
+.form-button-send:hover img {
+    content: url('/static/media/sendHover.svg');
+}
+
+.form-bottom {
+    display: flex;
+    flex-direction: inline;
+    width: 100%;
+    height: auto;
 }
 
 .indicator {
@@ -98,7 +112,7 @@
     height: 90%;
     width: 100%;
     overflow-y: auto;
-    margin-bottom: auto;
+    margin: 8px 0px 50px 0px;
 }
 
 .conteiner-msg {
@@ -114,7 +128,7 @@
     padding: 5px 13px;
     border-radius: 8px;
     color: white;
-    margin: 10px;
+    margin: 6px 10px 3px 10px;
 }
 
 .recipient-msg {
@@ -123,11 +137,6 @@
     padding: 5px 13px;
     border-radius: 8px;
     color: white;
-    margin: 10px;
+    margin: 6px 10px 3px 10px;
 }
 
-.form-bottom {
-    display: flex;
-    flex-direction: inline;
-    width: 100%;
-}
