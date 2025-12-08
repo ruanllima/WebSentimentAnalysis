@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import joblib
 import re
 import nltk
 from nltk.corpus import stopwords
 import spacy
+
 
 nltk.download("stopwords")
 # execute 'python -m spacy download en_core_web_sm' in cmd to download the package
@@ -28,14 +29,12 @@ def index():
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    text = request.form.get("text")
-    text = preprocess(text)
-
+    text = preprocess(request.form.get("text"))
     X = vectorizer.transform([text])
     prediction = model.predict(X.toarray())[0]
-    prediction = prediction.lower()
 
-    return render_template("/index.html", result=prediction)
+    return jsonify({"result": prediction})
+    #return render_template("/index.html", result=prediction)
 
 if __name__ == "__main__":
     app.run(debug=True)

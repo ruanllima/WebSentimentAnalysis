@@ -70,19 +70,19 @@
     margin-top: 20px;
 }
 
-.indicator.positive {
+.indicator.Positive {
     background: green;
 }
 
-.indicator.negative {
+.indicator.Negative {
     background: red;
 }
 
-.indicator.irrelevant {
+.indicator.Irrelevant {
     background: yellow;
 }
 
-.indicator.neutral {
+.indicator.Neutral {
     background: gray;
 }
 

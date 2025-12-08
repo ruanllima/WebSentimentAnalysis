@@ -1,2 +1,2 @@
 const element = document.getElementById("scroll-msg");
-element.scrollTop = element.scrollHeight
+element.scrollTop = element.scrollHeight;
