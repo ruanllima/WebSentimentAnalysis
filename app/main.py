@@ -4,6 +4,8 @@ import re
 import nltk
 from nltk.corpus import stopwords
 import spacy
+from googletrans import Translator
+translator = Translator()
 
 
 nltk.download("stopwords")
@@ -23,13 +25,22 @@ def preprocess(text):
     words = [w for w in text.split() if w not in stop_words]
     return ' '.join([token.lemma_ for token in nlp(' '.join(words))])
 
+def translateText(text):
+    det = translator.detect(text)
+    if (det.lang == 'pt'):
+        trad = translator.translate(text, dest='en')
+        return trad.text
+    else:
+        return text
+
 @app.route("/")
 def index():
     return render_template("/index.html", result="None")
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    text = preprocess(request.form.get("text"))
+     
+    text = preprocess(translateText(request.form.get("text")))
     X = vectorizer.transform([text])
     prediction = model.predict(X.toarray())[0]
 
